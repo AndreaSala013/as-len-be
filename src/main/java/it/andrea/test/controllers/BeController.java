@@ -54,7 +54,11 @@ public class BeController {
             outFile = new File(outputFile);
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE , outFile);
             log.info("file saved {}", outFile.getAbsolutePath());
-
+            if(outFile.exists()){
+                log.info("il file esiste");
+            }else{
+                log.info("il file NON esiste");
+            }
             AudioConfig audioConfig = AudioConfig.fromWavFileInput(outputFile);
             log.info("url: {}",speechServUrl);
             URI uri = new URI(speechServUrl);
