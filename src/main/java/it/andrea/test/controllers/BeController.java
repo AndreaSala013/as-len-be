@@ -43,7 +43,7 @@ public class BeController {
 
     @PostMapping(value = "/speechToText")
     public ResponseEntity<?> speechToText(@RequestBody InputWav inputWav) throws Exception {
-        log.info("speechToText: {}",inputWav.getByteArrStr());
+        log.info("speechToText");
         String outputFile = "wav-file-"+ UUID.randomUUID()+".wav";
         File outFile = null;
         try{
@@ -53,7 +53,7 @@ public class BeController {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
             outFile = new File(outputFile);
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE , outFile);
-            log.info("file saved {}" + outputFile);
+            log.info("file saved {}", outFile.getAbsolutePath());
 
             AudioConfig audioConfig = AudioConfig.fromWavFileInput(outputFile);
             log.info("url: {}",speechServUrl);
@@ -73,7 +73,9 @@ public class BeController {
             throw ex;
         }finally {
             if(outFile != null){
-                outFile.delete();
+                if(outFile.delete()){
+                    log.info("File {} deleted", outFile.getAbsolutePath());
+                }
             }
         }
     }
