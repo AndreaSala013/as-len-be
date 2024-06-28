@@ -54,7 +54,7 @@ public class BeController {
             outFile = new File(outputFile);
             AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE , outFile);
             log.info("file saved {}", outFile.getAbsolutePath());
-            File checkFile = new File(outFile.getAbsolutePath());
+            File checkFile = new File(outputFile);
             if(checkFile.exists()){
                 log.info("il file esiste");
             }else{
