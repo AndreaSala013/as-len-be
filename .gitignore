@@ -1,0 +1,57 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+*application-local.properties
+*.iml
+.idea
+target/
+sources/edith-ordini/.project
+
+sources/edith-ordini/bin/.project
+
+sources/edith-ordini/bin/pom.xml
+
+sources/edith-ordini/bin/src/main/resources/application-test.properties
+
+sources/edith-ordini/bin/src/main/resources/application.properties
+
+sources/edith-ordini/bin/src/main/resources/lang/messages_en.properties
+
+sources/edith-ordini/bin/src/main/resources/lang/messages_it.properties
+
+sources/edith-ordini/bin/src/main/resources/logback-spring.xml
+
+sources/edith-ordini/bin/src/main/resources/logback-test.xml
+
+sources/edith-ordini/.classpath
+
+sources/edith-ordini/.settings/org.eclipse.core.resources.prefs
+
+sources/edith-ordini/.settings/org.eclipse.jdt.core.prefs
+
+sources/edith-ordini/.settings/org.eclipse.wst.common.component
+
+sources/edith-ordini/.settings/org.eclipse.wst.common.project.facet.core.xml
+
+sources/edith-ordini/.settings/org.springframework.ide.eclipse.boot.prefs
