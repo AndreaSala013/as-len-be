@@ -59,10 +59,11 @@ public class BeController {
             File checkFile = new File(outputFile);
             if(checkFile.exists()){
                 log.info("il file {} esiste", outputFile);
+                log.info("read: {}", checkFile.canRead());
             }else{
                 log.info("il file {} NON esiste", outputFile);
             }
-            AudioConfig audioConfig = AudioConfig.fromWavFileInput(outputFile);
+            AudioConfig audioConfig = AudioConfig.fromWavFileInput(outFile.getAbsolutePath());
             log.info(speechSubscriptionKey);
             log.info(location);
             SpeechConfig speechConfig = SpeechConfig.fromSubscription(speechSubscriptionKey, location);
