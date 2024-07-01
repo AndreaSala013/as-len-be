@@ -63,7 +63,8 @@ public class BeController {
             }else{
                 log.info("il file {} NON esiste", outputFile);
             }
-            AudioConfig audioConfig = AudioConfig.fromWavFileInput(outFile.getAbsolutePath());
+            //AudioConfig audioConfig = AudioConfig.fromWavFileInput(outFile.getAbsolutePath());
+            AudioConfig audioConfig = AudioConfig.fromWavFileInput("fabiola.wav");
             log.info(speechSubscriptionKey);
             log.info(location);
             SpeechConfig speechConfig = SpeechConfig.fromSubscription(speechSubscriptionKey, location);
