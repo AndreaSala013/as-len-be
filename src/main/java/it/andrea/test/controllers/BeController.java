@@ -49,7 +49,8 @@ public class BeController {
         File outFile = null;
         try{
 
-            InputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(inputWav.getByteArrStr()));
+            //InputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(inputWav.getByteArrStr()));
+            InputStream inputStream = new ByteArrayInputStream(inputWav.getByteArr());
             //write wav file to file system
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
             outFile = new File(outputFile);

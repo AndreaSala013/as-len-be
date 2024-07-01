@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class InputWav {
-    private String byteArrStr;
+    private byte[] byteArr;
 
-    public InputWav(String _byteArrStr){
-        byteArrStr = _byteArrStr;
+    public InputWav(byte[] _byteArr){
+        byteArr = _byteArr;
     }
 }
