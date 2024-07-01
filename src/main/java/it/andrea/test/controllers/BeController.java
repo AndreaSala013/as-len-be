@@ -63,8 +63,8 @@ public class BeController {
             }else{
                 log.info("il file {} NON esiste", outputFile);
             }
-            //AudioConfig audioConfig = AudioConfig.fromWavFileInput(outFile.getAbsolutePath());
-            AudioConfig audioConfig = null;
+            AudioConfig audioConfig = AudioConfig.fromWavFileInput(outFile.getAbsolutePath());
+            /*AudioConfig audioConfig = null;
             try{
                 audioConfig = AudioConfig.fromWavFileInput("/home/site/wwwroot/fabiola.wav");
                 log.info("BENE 1");
@@ -82,7 +82,7 @@ public class BeController {
                 log.info("BENE 3");
             }catch (Exception ex){
                 log.error("MALE 3");
-            }
+            }*/
 
 
             //AudioConfig audioConfig = AudioConfig.fromWavFileInput("/home/site/wwwroot/fabiola.wav");
