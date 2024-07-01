@@ -44,6 +44,7 @@ public class BeController {
     @PostMapping(value = "/speechToText")
     public ResponseEntity<?> speechToText(@RequestBody InputWav inputWav) throws Exception {
         log.info("speechToText");
+        //log.info(inputWav.getByteArrStr());
         String outputFile = "wav-file-"+ UUID.randomUUID()+".wav";
         File outFile = null;
         try{
@@ -61,8 +62,8 @@ public class BeController {
                 log.info("il file NON esiste");
             }
             AudioConfig audioConfig = AudioConfig.fromWavFileInput(outputFile);
-            log.info("url: {}",speechServUrl);
-            URI uri = new URI(speechServUrl);
+            log.info(speechSubscriptionKey);
+            log.info(location);
             SpeechConfig speechConfig = SpeechConfig.fromSubscription(speechSubscriptionKey, location);
             speechConfig.setSpeechRecognitionLanguage("it-IT");
             SpeechRecognizer recognizer = new SpeechRecognizer(speechConfig, audioConfig);
