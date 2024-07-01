@@ -54,8 +54,8 @@ public class BeController {
             //write wav file to file system
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
             outFile = new File(outputFile);
-            AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE , outFile);
-            log.info("file saved {}", outFile.getAbsolutePath());
+            int byteNumbers = AudioSystem.write(audioInputStream, AudioFileFormat.Type.WAVE , outFile);
+            log.info("file saved {}, #bytes: {}", outFile.getAbsolutePath(),byteNumbers);
             File checkFile = new File(outputFile);
             if(checkFile.exists()){
                 log.info("il file {} esiste", outputFile);
@@ -63,8 +63,8 @@ public class BeController {
             }else{
                 log.info("il file {} NON esiste", outputFile);
             }
-            //AudioConfig audioConfig = AudioConfig.fromWavFileInput(outFile.getAbsolutePath());
-            AudioConfig audioConfig = AudioConfig.fromWavFileInput("fabiola.wav");
+            AudioConfig audioConfig = AudioConfig.fromWavFileInput(outFile.getAbsolutePath());
+            //AudioConfig audioConfig = AudioConfig.fromWavFileInput("/home/site/wwwroot/fabiola.wav");
             log.info(speechSubscriptionKey);
             log.info(location);
             SpeechConfig speechConfig = SpeechConfig.fromSubscription(speechSubscriptionKey, location);
