@@ -49,8 +49,8 @@ public class BeController {
         File outFile = null;
         try{
 
-            //InputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(inputWav.getByteArrStr()));
-            InputStream inputStream = new ByteArrayInputStream(inputWav.getByteArr());
+            InputStream inputStream = new ByteArrayInputStream(Base64.getDecoder().decode(inputWav.getByteArrStr()));
+            //InputStream inputStream = new ByteArrayInputStream(inputWav.getByteArr());
             //write wav file to file system
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(inputStream);
             outFile = new File(outputFile);
@@ -58,9 +58,9 @@ public class BeController {
             log.info("file saved {}", outFile.getAbsolutePath());
             File checkFile = new File(outputFile);
             if(checkFile.exists()){
-                log.info("il file esiste");
+                log.info("il file {} esiste", outputFile);
             }else{
-                log.info("il file NON esiste");
+                log.info("il file {} NON esiste", outputFile);
             }
             AudioConfig audioConfig = AudioConfig.fromWavFileInput(outputFile);
             log.info(speechSubscriptionKey);
