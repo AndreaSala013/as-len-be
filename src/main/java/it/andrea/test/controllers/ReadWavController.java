@@ -33,8 +33,8 @@ public class ReadWavController {
 
     private String sendWavBe(String fileName) {
         try {
-            //String url = "https://as-lenovo-be.azurewebsites.net/be/speechToText";
-            String url = "http://localhost:9090/be/speechToText";
+            String url = "https://as-lenovo-be.azurewebsites.net/be/speechToText";
+            //String url = "http://localhost:9090/be/speechToText";
             log.info("Calling BE with url {}",url);
 
             InputStream is=new FileInputStream("C:\\Users\\asala1\\OneDrive - BUSINESS INTEGRATION PARTNERS SPA\\Documents\\Audacity\\"+fileName);

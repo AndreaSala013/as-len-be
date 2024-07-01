@@ -80,9 +80,9 @@ public class BeController {
             throw ex;
         }finally {
             if(outFile != null){
-                if(outFile.delete()){
+                /*if(outFile.delete()){
                     log.info("File {} deleted", outFile.getAbsolutePath());
-                }
+                }*/
             }
         }
     }
