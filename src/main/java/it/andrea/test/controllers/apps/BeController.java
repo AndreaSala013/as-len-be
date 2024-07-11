@@ -52,8 +52,7 @@ public class BeController {
         log.info("textToSpeech");
         try{
 
-            SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer(speechConfig);
-
+            SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer(speechConfig, null);
             // Get text from the console and synthesize to the default speaker.
             SpeechSynthesisResult speechSynthesisResult = speechSynthesizer.SpeakTextAsync(inputText).get();
 
