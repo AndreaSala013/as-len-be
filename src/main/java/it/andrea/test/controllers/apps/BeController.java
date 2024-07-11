@@ -2,31 +2,28 @@ package it.andrea.test.controllers.apps;
 
 import com.microsoft.cognitiveservices.speech.*;
 import com.microsoft.cognitiveservices.speech.audio.*;
+import it.andrea.test.model.InputText;
 import it.andrea.test.model.InputWav;
 import it.andrea.test.services.PullStreamInputReader;
+import it.andrea.test.services.WavFileUtility;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.annotation.PostConstruct;
+import javax.sound.sampled.AudioFormat;
 import java.io.*;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Scanner;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
 
 @Slf4j
 @RestController()
 @RequestMapping("/be")
 public class BeController {
+
+    private SpeechConfig speechConfig;
 
     @Value("${speech.serv.url}")
     private String speechServUrl;
@@ -35,11 +32,54 @@ public class BeController {
     //@Value("${speech.serv.key}")
     private String speechSubscriptionKey = "fabc8fd4e0c94051a334673da9ad5c00";
 
+    @PostConstruct
+    public void setupSpeechConfig(){
+        speechConfig = SpeechConfig.fromSubscription(speechSubscriptionKey, location);
+        speechConfig.setSpeechSynthesisVoiceName("it-IT-ImeldaNeural");
+        //speechConfig.setSpeechSynthesisLanguage("it-IT");
+
+        speechConfig.setSpeechRecognitionLanguage("it-IT");
+    }
+
     @GetMapping(value = "/health")
     public ResponseEntity<?> beResp() {
         log.info("BE is responding");
         return ResponseEntity.ok("BE is up and running");
     }
+
+    @GetMapping(value = "/textToSpeech")
+    public ResponseEntity<?> textToSpeech(@RequestParam String inputText) throws Exception {
+        log.info("textToSpeech");
+        try{
+
+            SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer(speechConfig);
+
+            // Get text from the console and synthesize to the default speaker.
+            SpeechSynthesisResult speechSynthesisResult = speechSynthesizer.SpeakTextAsync(inputText).get();
+
+            if (speechSynthesisResult.getReason() == ResultReason.SynthesizingAudioCompleted) {
+                log.info("Speech pronto");
+                //WavFileUtility.CreateWavFile(speechSynthesisResult.getAudioData());
+                InputWav output = new InputWav("resp",speechSynthesisResult.getAudioData());
+                return ResponseEntity.ok(output);
+            }
+            else if (speechSynthesisResult.getReason() == ResultReason.Canceled) {
+                SpeechSynthesisCancellationDetails cancellation = SpeechSynthesisCancellationDetails.fromResult(speechSynthesisResult);
+                log.error("CANCELED: Reason=" + cancellation.getReason());
+
+                if (cancellation.getReason() == CancellationReason.Error) {
+                    log.error("CANCELED: ErrorCode=" + cancellation.getErrorCode());
+                    log.error("CANCELED: ErrorDetails=" + cancellation.getErrorDetails());
+                    log.error("CANCELED: Did you set the speech resource key and region values?");
+                }
+            }
+        }catch (Exception ex){
+            log.error(ex.getMessage());
+            throw ex;
+        }
+        return ResponseEntity.internalServerError().body("ERROR");
+    }
+
 
     @PostMapping(value = "/speechToText")
     public ResponseEntity<?> speechToText(@RequestBody InputWav inputWav) throws Exception {
@@ -51,8 +91,6 @@ public class BeController {
 
             log.info(speechSubscriptionKey);
             log.info(location);
-            SpeechConfig speechConfig = SpeechConfig.fromSubscription(speechSubscriptionKey, location);
-            speechConfig.setSpeechRecognitionLanguage("it-IT");
             SpeechRecognizer recognizer = new SpeechRecognizer(speechConfig, audioConfig);
 
             log.info("Recognizing...");
