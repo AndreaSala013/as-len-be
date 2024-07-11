@@ -1,4 +1,4 @@
-package it.andrea.test.controllers;
+package it.andrea.test.controllers.apps;
 
 import it.andrea.test.model.InputWav;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +27,13 @@ public class ReadWavController {
 
     @GetMapping(value = "")
     public ResponseEntity<?> beResp(@RequestParam String fileName) {
-        sendWavBe(fileName);
-        return ResponseEntity.ok("true");
+        return ResponseEntity.ok(sendWavBe(fileName));
     }
 
     private String sendWavBe(String fileName) {
         try {
             String url = "https://as-lenovo-be.azurewebsites.net/be/speechToText";
-            //String url = "http://localhost:8080/be/speechToText";
+            //String url = "http://localhost:9090/be/speechToText";
             log.info("Calling BE with url {}",url);
 
             InputStream is=new FileInputStream("C:\\Users\\asala1\\OneDrive - BUSINESS INTEGRATION PARTNERS SPA\\Documents\\Audacity\\"+fileName);
@@ -47,9 +46,8 @@ public class ReadWavController {
                 buffer.write(data, 0, nRead);
             }
             byte[] bytes = buffer.toByteArray();
-            String byteStr = Base64.getEncoder().encodeToString(bytes);
 
-            InputWav inputWav = new InputWav(byteStr);
+            InputWav inputWav = new InputWav("",bytes);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
