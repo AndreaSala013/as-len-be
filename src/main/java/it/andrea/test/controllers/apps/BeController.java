@@ -30,10 +30,10 @@ public class BeController {
 
     @Value("${speech.serv.url}")
     private String speechServUrl;
-    @Value("${speech.serv.location}")
-    private String location;
-    @Value("${speech.serv.key}")
-    private String speechSubscriptionKey;
+    //@Value("${speech.serv.location}")
+    private String location = "northeurope";
+    //@Value("${speech.serv.key}")
+    private String speechSubscriptionKey = "fabc8fd4e0c94051a334673da9ad5c00";
 
     @GetMapping(value = "/health")
     public ResponseEntity<?> beResp() {
